@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Text.Json.Nodes;
 using System;
 
 namespace SAM.Core.IoT
@@ -70,7 +70,7 @@ namespace SAM.Core.IoT
             return parameterSet.Add(name , value as dynamic);
         }
 
-        public bool FromJObject(JObject jObject)
+        public bool FromJsonObject(JsonObject jObject)
         {
             if(jObject == null)
             {
@@ -79,25 +79,25 @@ namespace SAM.Core.IoT
 
             if(jObject.ContainsKey("Ticks"))
             {
-                ticks = jObject.Value<long>("Ticks");
+                ticks = jObject["Ticks"]?.GetValue<long>() ?? default(long);
             }
 
             if (jObject.ContainsKey("ParameterSet"))
             {
-                parameterSet = new ParameterSet(jObject.Value<JObject>("ParameterSet"));
+                parameterSet = new ParameterSet(jObject["ParameterSet"] as JsonObject);
             }
 
             return true;
         }
 
-        public JObject ToJObject()
+        public JsonObject ToJsonObject()
         {
-            JObject jObject = new JObject();
+            JsonObject jObject = new JsonObject();
             jObject.Add("_type", Core.Query.FullTypeName(this));
             jObject.Add("Ticks", ticks);
 
             if (parameterSet != null)
-                jObject.Add("ParameterSet", parameterSet.ToJObject());
+                jObject.Add("ParameterSet", parameterSet.ToJsonObject());
 
             return jObject;
         }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Text.Json.Nodes;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -9,14 +9,14 @@ namespace SAM.Core.IoT
 {
     public static partial class Query
     {
-        public static async Task<JObject> Response(string uri, TimeSpan timeout)
+        public static async Task<JsonObject> Response(string uri, TimeSpan timeout)
         {
             if(string.IsNullOrWhiteSpace(uri))
             {
                 return null;
             }
 
-            JObject result = null;
+            JsonObject result = null;
 
             using (HttpClient httpClient = new HttpClient())
             {
@@ -50,7 +50,7 @@ namespace SAM.Core.IoT
                         try
                         {
                             string json = await httpResponseMessage.Content.ReadAsStringAsync();
-                            result = JObject.Parse(json);
+                            result = JsonNode.Parse(json) as JsonObject;
                         }
                         catch
                         {
@@ -63,7 +63,7 @@ namespace SAM.Core.IoT
             return result;
         }
 
-        public static async Task<JObject> Response(string uri)
+        public static async Task<JsonObject> Response(string uri)
         {
             return await Response(uri, TimeSpan.FromSeconds(5));
         }

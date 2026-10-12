@@ -1,3 +1,5 @@
+> **Experimental.** SAM_IoT is an exploratory sandbox for Internet-of-Things work. It is outside the current SAM production release (it is not packaged by SAM_Deploy), has no stable API, and remains open for future development. It carries the GitHub topic `experimental`.
+
 [![Build (Windows)](https://github.com/SAM-BIM/SAM_IoT/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/SAM-BIM/SAM_IoT/actions/workflows/build.yml)
 [![Installer (latest)](https://img.shields.io/github/v/release/SAM-BIM/SAM_Deploy?label=installer)](https://github.com/SAM-BIM/SAM_Deploy/releases/latest)
 
